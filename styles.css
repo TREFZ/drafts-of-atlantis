@@ -1,0 +1,100 @@
+
+body {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	background: #f4f8fb;
+	color: #222;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+  padding: 0 16px;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 2rem;
+	color: #1a4a6a;
+}
+
+.draft-form {
+	background: #fff;
+	max-width: 400px;
+	margin: 2rem auto;
+	padding: 2rem 2.5rem 1.5rem 2.5rem;
+	border-radius: 12px;
+	box-shadow: 0 2px 12px rgba(30,60,90,0.08);
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+}
+
+.draft-form label,
+.draft-form legend {
+	font-weight: 500;
+	color: #1a4a6a;
+}
+
+.draft-form select {
+	margin-left: 0.5rem;
+	padding: 0.3rem 0.7rem;
+	border-radius: 5px;
+	border: 1px solid #b0c4d6;
+	font-size: 1rem;
+}
+
+.complexity-group {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	border: none;
+	padding: 0;
+}
+
+
+.complexity-group label {
+	font-weight: 400;
+	color: #234;
+	display: flex;
+	align-items: center;
+	font-size: 1.2em;
+}
+
+.complexity-group input[type="checkbox"] {
+	width: 1.5em;
+	height: 1.5em;
+	accent-color: #1a4a6a;
+	margin-right: 0.4em;
+}
+
+.draft-form button {
+	background: #1a4a6a;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 0.7rem 1.2rem;
+	font-size: 1.1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.draft-form button:hover {
+	background: #256fa1;
+}
+
+.draft-results {
+	max-width: 400px;
+	margin: 1.5rem auto 0 auto;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 1px 8px rgba(30,60,90,0.06);
+	padding: 1.2rem 2rem;
+	min-height: 2.5rem;
+	font-size: 1.1rem;
+	color: #1a4a6a;
+}
+.draft-results ul {
+	padding-left: 1.2rem;
+	margin: 0.5rem 0 0 0;
+}
+.draft-results li {
+	margin-bottom: 0.3rem;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>Drafts of Atlantis</h1>
+
+      <form id="draftForm" class="draft-form">
+        <label for="numHeroes"># of heroes to draft:</label>
+        <select id="numHeroes" name="numHeroes">
+          <!-- Options 1-12 -->
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+
+        <fieldset class="complexity-group">
+          <legend>Complexity</legend>
+          <label><input type="checkbox" name="complexity" value="1" checked> 1</label>
+          <label><input type="checkbox" name="complexity" value="2" checked> 2</label>
+          <label><input type="checkbox" name="complexity" value="3" checked> 3</label>
+          <label><input type="checkbox" name="complexity" value="4" checked> 4</label>
+        </fieldset>
+
+        <button type="submit">Draft</button>
+      </form>
+
+      <div id="draftResults" class="draft-results"></div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
