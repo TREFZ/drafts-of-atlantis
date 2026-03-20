@@ -4,79 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Drafts of Atlantis</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="./tailwindcss-browser@4.js"></script>
   </head>
-  <body>
-    <h1>Drafts of Atlantis</h1>
+  <body class="min-h-screen bg-slate-100 px-4 py-8 font-sans text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <main class="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <header class="text-center">
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
+          Drafts of Atlantis
+        </h1>
+      </header>
 
 
-      <form id="draftForm" class="draft-form">
-        <fieldset id="draftTypeGroup" class="draft-type-group">
-          <legend>Draft type:</legend>
-          <label><input type="radio" name="draftType" value="random" checked>Random draft</label>
-          <label><input type="radio" name="draftType" value="single">Single draft</label>
-          <label><input type="radio" name="draftType" value="oneEach">One from each complexity</label>
+      <form id="draftForm" class="mx-auto flex w-full max-w-xl flex-col gap-6">
+        <!-- Draft type container -->
+        <fieldset id="draftTypeGroup" class="rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col gap-3 border-0 p-0">
+          <h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">
+            Draft type
+          </h2>
+          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+            <input type="radio" name="draftType" value="random" checked class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
+            <span>Random draft</span>
+          </label>
+          <div class="ml-7 mb-2 text-sm text-slate-500 dark:text-slate-400">Teams draft from a random selection of heroes. Recommend setting the hero count to player count + 2.</div>
+          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+            <input type="radio" name="draftType" value="single" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
+            <span>Single draft</span>
+          </label>
+          <div class="ml-7 mb-2 text-sm text-slate-500 dark:text-slate-400">Assign each player three heroes. Each player then chooses one.</div>
+          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+            <input type="radio" name="draftType" value="oneEach" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
+            <span>One from each complexity</span>
+          </label>
+          <div class="ml-7 text-sm text-slate-500 dark:text-slate-400">Assign each player one hero from each complexity rating. Each player then chooses one.</div>
+          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+            <input type="radio" name="draftType" value="allRandom" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
+            <span>All random</span>
+          </label>
+          <div class="ml-7 text-sm text-slate-500 dark:text-slate-400">Assign each player a random hero. You get what you get.</div>
         </fieldset>
 
-        <div id="numHeroesGroup">
-          <label for="numHeroes"># of heroes to draft:</label>
-          <select id="numHeroes" name="numHeroes">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8" selected>8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-          </select>
-        </div>
+        <!-- Draft options container -->
+        <section class="rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col gap-4">
+          <h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">Draft options</h2>
+          <div id="numHeroesGroup" class="flex flex-col gap-2">
+            <label for="numHeroes" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Number of heroes</label>
+            <select id="numHeroes" name="numHeroes" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-amber-400 dark:focus:ring-amber-400/20">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8" selected>8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
 
-        <fieldset class="complexity-group" id="complexityGroup">
-          <legend>Complexity</legend>
-          <label><input type="checkbox" name="complexity" value="1" checked> <span aria-label="1 star">⭐</span></label>
-          <label><input type="checkbox" name="complexity" value="2" checked> <span aria-label="2 stars">⭐⭐</span></label>
-          <label><input type="checkbox" name="complexity" value="3" checked> <span aria-label="3 stars">⭐⭐⭐</span></label>
-          <label><input type="checkbox" name="complexity" value="4" checked> <span aria-label="4 stars">⭐⭐⭐⭐</span></label>
-        </fieldset>
+          <fieldset id="complexityGroup" class="flex flex-col gap-3 border-0 p-0">
+            <legend class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">
+              Complexity
+            </legend>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="1" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="1 star" class="text-amber-500 dark:text-amber-400">⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="2" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="2 stars" class="text-amber-500 dark:text-amber-400">⭐⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="3" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="3 stars" class="text-amber-500 dark:text-amber-400">⭐⭐⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="4" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="4 stars" class="text-amber-500 dark:text-amber-400">⭐⭐⭐⭐</span>
+            </label>
+          </fieldset>
 
-        <div id="numPlayersGroup" style="display:none;">
-          <label for="numPlayers">Number of players:</label>
-          <select id="numPlayers" name="numPlayers">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
-        </div>
-        <div id="singleNumPlayersGroup" style="display:none;">
-          <label for="singleNumPlayers">Number of players:</label>
-          <select id="singleNumPlayers" name="singleNumPlayers">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-        </div>
-        <button type="submit">Draft</button>
+          <div id="numPlayersGroup" class="hidden flex-col gap-2">
+            <label for="numPlayers" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Number of players</label>
+            <select id="numPlayers" name="numPlayers" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-amber-400 dark:focus:ring-amber-400/20">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+
+          <div id="singleNumPlayersGroup" class="hidden flex-col gap-2">
+            <label for="singleNumPlayers" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Number of players</label>
+            <select id="singleNumPlayers" name="singleNumPlayers" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-amber-400 dark:focus:ring-amber-400/20">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </section>
+
+        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-sky-700 px-4 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white dark:bg-amber-400 dark:text-slate-900 dark:hover:bg-amber-300 dark:focus:ring-amber-300 dark:focus:ring-offset-slate-900">
+          Draft
+        </button>
       </form>
 
-      <div id="draftResults" class="draft-results"></div>
+      <div id="draftResults" class="mx-auto w-full max-w-xl rounded-2xl bg-white p-6 text-slate-700 shadow-lg ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:ring-slate-800 min-h-16"></div>
+    </main>
 
     <script src="index.js"></script>
   </body>
