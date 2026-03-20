@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function starMarkup(complexity) {
-    return `<span class="ml-1 text-amber-500 dark:text-amber-400">${"⭐".repeat(
+    return `<span class="text-xs ml-1 text-amber-500 dark:text-amber-400">${"⭐".repeat(
       complexity
     )}</span>`;
   }
