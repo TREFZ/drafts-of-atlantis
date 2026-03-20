@@ -1,100 +1,222 @@
+/* CSS Variables for Light/Dark Mode */
+:root {
+	--color-bg: #f4f8fb;
+	--color-text: #222;
+	--color-primary: #1a4a6a;
+	--color-accent: #e0b100;
+	--color-form-bg: #fff;
+	--color-form-shadow: 0 2px 12px rgba(30,60,90,0.08);
+	--color-form-label: #1a4a6a;
+	--color-form-select-border: #b0c4d6;
+	--color-form-select-bg: #fff;
+	--color-form-select-text: #1a4a6a;
+	--color-checkbox: #1a4a6a;
+	--color-checkbox-bg: #fff;
+	--color-checkbox-border: #b0c4d6;
+	--color-btn-bg: #1a4a6a;
+	--color-btn-text: #fff;
+	--color-btn-hover-bg: #256fa1;
+	--color-btn-hover-text: #fff;
+	--color-results-bg: #fff;
+	--color-results-text: #1a4a6a;
+	--color-results-shadow: 0 1px 8px rgba(30,60,90,0.06);
+	--color-player-block-bg: #f7fafc;
+	--color-player-block-shadow: 0 1px 4px rgba(30,60,90,0.04);
+	--color-player-label: #1a4a6a;
+	--color-star: #e0b100;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-bg: #181c23;
+		--color-text: #e6e6e6;
+		--color-primary: #f7c948;
+		--color-accent: #f7c948;
+		--color-form-bg: #232733;
+		--color-form-shadow: 0 2px 12px rgba(0,0,0,0.25);
+		--color-form-label: #f7c948;
+		--color-form-select-border: #444a5a;
+		--color-form-select-bg: #232733;
+		--color-form-select-text: #f7c948;
+		--color-checkbox: #f7c948;
+		--color-checkbox-bg: #232733;
+		--color-checkbox-border: #444a5a;
+		--color-btn-bg: #f7c948;
+		--color-btn-text: #232733;
+		--color-btn-hover-bg: #e0b100;
+		--color-btn-hover-text: #181c23;
+		--color-results-bg: #232733;
+		--color-results-text: #f7c948;
+		--color-results-shadow: 0 1px 8px rgba(0,0,0,0.18);
+		--color-player-block-bg: #181c23;
+		--color-player-block-shadow: 0 1px 4px rgba(0,0,0,0.18);
+		--color-player-label: #f7c948;
+		--color-star: #f7c948;
+	}
+}
+.complexity-group label span[aria-label$="star"],
+.complexity-group label span[aria-label$="stars"] {
+ color: var(--color-star);
+ font-size: 1.15em;
+ margin-left: 0.2em;
+}
+.draft-type-group {
+	border: none;
+	padding: 0;
+	margin: 0 0 0.5rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.draft-type-group legend {
+ font-weight: 500;
+ color: var(--color-form-label);
+ margin-bottom: 0.2rem;
+}
+
+.draft-type-group label {
+ display: flex;
+ align-items: center;
+ font-size: 1.05em;
+ font-weight: 400;
+ color: var(--color-text);
+ gap: 0.5em;
+}
+.draft-results .player-columns {
+	margin-top: 8px;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.5rem;
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+/* .draft-results .player-block {
+ background: var(--color-player-block-bg);
+ border-radius: 8px;
+ padding: 0.7rem 1rem 0.5rem 1rem;
+ box-shadow: var(--color-player-block-shadow);
+} */
+
+.draft-results .player-block strong {
+ font-size: 1.05em;
+ color: var(--color-player-label);
+}
+
 
 body {
-	font-family: 'Segoe UI', Arial, sans-serif;
-	background: #f4f8fb;
-	color: #222;
-	margin: 0;
-	padding: 0;
-	min-height: 100vh;
-  padding: 0 16px;
+ font-family: 'Segoe UI', Arial, sans-serif;
+ background: var(--color-bg);
+ color: var(--color-text);
+ padding: 16px;
+ min-height: 100vh;
 }
 
 h1 {
-	text-align: center;
-	margin-top: 2rem;
-	color: #1a4a6a;
+ text-align: center;
+ margin-top: 2rem;
+ color: var(--color-text);
+ letter-spacing: 0.01em;
 }
 
 .draft-form {
-	background: #fff;
-	max-width: 400px;
-	margin: 2rem auto;
-	padding: 2rem 2.5rem 1.5rem 2.5rem;
-	border-radius: 12px;
-	box-shadow: 0 2px 12px rgba(30,60,90,0.08);
-	display: flex;
-	flex-direction: column;
-	gap: 1.2rem;
+ background: var(--color-form-bg);
+ max-width: 400px;
+ margin: 2rem auto;
+ padding: 2rem 2.5rem 1.5rem 2.5rem;
+ border-radius: 12px;
+ box-shadow: var(--color-form-shadow);
+ display: flex;
+ flex-direction: column;
+ gap: 1.2rem;
 }
 
 .draft-form label,
 .draft-form legend {
-	font-weight: 500;
-	color: #1a4a6a;
+ font-weight: 500;
+ color: var(--color-form-label);
 }
 
 .draft-form select {
-	margin-left: 0.5rem;
-	padding: 0.3rem 0.7rem;
-	border-radius: 5px;
-	border: 1px solid #b0c4d6;
-	font-size: 1rem;
+ margin-left: 0.5rem;
+ padding: 0.3rem 0.7rem;
+ border-radius: 5px;
+ border: 1px solid var(--color-form-select-border);
+ background: var(--color-form-select-bg);
+ color: var(--color-form-select-text);
+ font-size: 1rem;
 }
+
 
 .complexity-group {
 	display: flex;
-	gap: 1rem;
-	align-items: center;
+	flex-direction: column;
+	gap: 0.3rem;
+	align-items: flex-start;
 	border: none;
 	padding: 0;
 }
 
 
 .complexity-group label {
-	font-weight: 400;
-	color: #234;
-	display: flex;
-	align-items: center;
-	font-size: 1.2em;
+ font-weight: 400;
+ color: var(--color-text);
+ display: flex;
+ align-items: center;
+ font-size: 1.2em;
 }
 
 .complexity-group input[type="checkbox"] {
-	width: 1.5em;
-	height: 1.5em;
-	accent-color: #1a4a6a;
-	margin-right: 0.4em;
+ width: 1.5em;
+ height: 1.5em;
+ accent-color: var(--color-checkbox);
+ background: var(--color-checkbox-bg);
+ border: 1.5px solid var(--color-checkbox-border);
+ margin-right: 0.4em;
 }
 
 .draft-form button {
-	background: #1a4a6a;
-	color: #fff;
-	border: none;
-	border-radius: 6px;
-	padding: 0.7rem 1.2rem;
-	font-size: 1.1rem;
-	font-weight: 600;
-	cursor: pointer;
-	transition: background 0.2s;
+ background: var(--color-btn-bg);
+ color: var(--color-btn-text);
+ border: none;
+ border-radius: 6px;
+ padding: 0.7rem 1.2rem;
+ font-size: 1.1rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: background 0.2s;
 }
 .draft-form button:hover {
-	background: #256fa1;
+ background: var(--color-btn-hover-bg);
+ color: var(--color-btn-hover-text);
 }
 
 .draft-results {
-	max-width: 400px;
-	margin: 1.5rem auto 0 auto;
-	background: #fff;
-	border-radius: 10px;
-	box-shadow: 0 1px 8px rgba(30,60,90,0.06);
-	padding: 1.2rem 2rem;
-	min-height: 2.5rem;
-	font-size: 1.1rem;
-	color: #1a4a6a;
+ max-width: 400px;
+ margin: 1.5rem auto 0 auto;
+ background: var(--color-results-bg);
+ border-radius: 10px;
+ box-shadow: var(--color-results-shadow);
+ padding: 1.2rem 2rem;
+ min-height: 2.5rem;
+ font-size: 1.1rem;
+ color: var(--color-results-text);
 }
 .draft-results ul {
-	padding-left: 1.2rem;
-	margin: 0.5rem 0 0 0;
+ padding-left: 0;
+ margin: 0.5rem 0 0 0;
 }
 .draft-results li {
-	margin-bottom: 0.3rem;
+ margin-left: 0;
+ margin-bottom: 0.2rem;
+ padding-left: 0;
+ font-size: 0.98em;
+ white-space: nowrap;
+ list-style-type: none;
+ color: var(--color-text);
+}
+
+.draft-results .star {
+  font-size: 0.6rem
 }

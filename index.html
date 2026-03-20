@@ -4,38 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
+    <title>Drafts of Atlantis</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h1>Drafts of Atlantis</h1>
 
-      <form id="draftForm" class="draft-form">
-        <label for="numHeroes"># of heroes to draft:</label>
-        <select id="numHeroes" name="numHeroes">
-          <!-- Options 1-12 -->
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
 
-        <fieldset class="complexity-group">
-          <legend>Complexity</legend>
-          <label><input type="checkbox" name="complexity" value="1" checked> 1</label>
-          <label><input type="checkbox" name="complexity" value="2" checked> 2</label>
-          <label><input type="checkbox" name="complexity" value="3" checked> 3</label>
-          <label><input type="checkbox" name="complexity" value="4" checked> 4</label>
+      <form id="draftForm" class="draft-form">
+        <fieldset id="draftTypeGroup" class="draft-type-group">
+          <legend>Draft type:</legend>
+          <label><input type="radio" name="draftType" value="random" checked>Random draft</label>
+          <label><input type="radio" name="draftType" value="single">Single draft</label>
+          <label><input type="radio" name="draftType" value="oneEach">One from each complexity</label>
         </fieldset>
 
+        <div id="numHeroesGroup">
+          <label for="numHeroes"># of heroes to draft:</label>
+          <select id="numHeroes" name="numHeroes">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8" selected>8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+
+        <fieldset class="complexity-group" id="complexityGroup">
+          <legend>Complexity</legend>
+          <label><input type="checkbox" name="complexity" value="1" checked> <span aria-label="1 star">⭐</span></label>
+          <label><input type="checkbox" name="complexity" value="2" checked> <span aria-label="2 stars">⭐⭐</span></label>
+          <label><input type="checkbox" name="complexity" value="3" checked> <span aria-label="3 stars">⭐⭐⭐</span></label>
+          <label><input type="checkbox" name="complexity" value="4" checked> <span aria-label="4 stars">⭐⭐⭐⭐</span></label>
+        </fieldset>
+
+        <div id="numPlayersGroup" style="display:none;">
+          <label for="numPlayers">Number of players:</label>
+          <select id="numPlayers" name="numPlayers">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div id="singleNumPlayersGroup" style="display:none;">
+          <label for="singleNumPlayers">Number of players:</label>
+          <select id="singleNumPlayers" name="singleNumPlayers">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
         <button type="submit">Draft</button>
       </form>
 
