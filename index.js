@@ -1,36 +1,36 @@
 const heroes = {
-  Arien: { complexity: 1 },
-  Brogan: { complexity: 1 },
-  Tigerclaw: { complexity: 1 },
-  Wasp: { complexity: 1 },
-  Sabina: { complexity: 1 },
-  Xargatha: { complexity: 1 },
-  Dodger: { complexity: 1 },
-  Rowenna: { complexity: 2 },
-  Garrus: { complexity: 2 },
-  Bain: { complexity: 2 },
-  Whisper: { complexity: 2 },
-  Misa: { complexity: 2 },
-  Ursafar: { complexity: 2 },
-  Silverarrow: { complexity: 2 },
-  Min: { complexity: 2 },
-  Mrak: { complexity: 3 },
-  Cutter: { complexity: 3 },
-  Trinkets: { complexity: 3 },
-  Tali: { complexity: 3 },
-  Swift: { complexity: 3 },
-  Wuk: { complexity: 3 },
-  Hanu: { complexity: 3 },
-  Brynn: { complexity: 3 },
-  Mortimer: { complexity: 3 },
-  Widget: { complexity: 3 },
-  Snorri: { complexity: 4 },
-  Razzle: { complexity: 4 },
-  Gydion: { complexity: 4 },
-  Nebkher: { complexity: 4 },
-  Ignatia: { complexity: 4 },
-  Takahide: { complexity: 4 },
-  Emmitt: { complexity: 4 }
+  Arien: { complexity: 1, expansion: 'Base' },
+  Brogan: { complexity: 1, expansion: 'Base' },
+  Tigerclaw: { complexity: 1, expansion: 'Base' },
+  Wasp: { complexity: 1, expansion: 'Base' },
+  Sabina: { complexity: 1, expansion: 'Base' },
+  Xargatha: { complexity: 1, expansion: 'Base' },
+  Dodger: { complexity: 1, expansion: 'Base' },
+  Rowenna: { complexity: 2, expansion: 'Arcane' },
+  Garrus: { complexity: 2, expansion: 'Defiant' },
+  Bain: { complexity: 2, expansion: 'Defiant' },
+  Whisper: { complexity: 2, expansion: 'Devoted' },
+  Misa: { complexity: 2, expansion: 'Devoted' },
+  Ursafar: { complexity: 2, expansion: 'Devoted' },
+  Silverarrow: { complexity: 2, expansion: 'Devoted' },
+  Min: { complexity: 2, expansion: 'Renown' },
+  Mrak: { complexity: 3, expansion: 'Arcane' },
+  Cutter: { complexity: 3, expansion: 'Defiant' },
+  Trinkets: { complexity: 3, expansion: 'Defiant' },
+  Tali: { complexity: 3, expansion: 'Devoted' },
+  Swift: { complexity: 3, expansion: 'Renown' },
+  Wuk: { complexity: 3, expansion: 'Renown' },
+  Hanu: { complexity: 3, expansion: 'Renown' },
+  Brynn: { complexity: 3, expansion: 'Wayward' },
+  Mortimer: { complexity: 3, expansion: 'Wayward' },
+  Widget: { complexity: 3, expansion: 'Wayward' },
+  Snorri: { complexity: 4, expansion: 'Arcane' },
+  Razzle: { complexity: 4, expansion: 'Arcane' },
+  Gydion: { complexity: 4, expansion: 'Arcane' },
+  Nebkher: { complexity: 4, expansion: 'Defiant' },
+  Ignatia: { complexity: 4, expansion: 'Renown' },
+  Takahide: { complexity: 4, expansion: 'Wayward' },
+  Emmitt: { complexity: 4, expansion: 'Wayward' }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const numHeroesGroup = document.getElementById("numHeroesGroup");
   const numPlayersGroup = document.getElementById("numPlayersGroup");
   const singleNumPlayersGroup = document.getElementById("singleNumPlayersGroup");
+  const expansionGroup = document.getElementById("expansionGroup");
 
   const numHeroesSelect = document.getElementById("numHeroes");
   const numPlayersSelect = document.getElementById("numPlayers");
@@ -169,6 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
     resultsDiv.innerHTML = "";
   }
 
+  function renderResults(markup) {
+    resultsDiv.innerHTML = markup;
+    resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function updateDraftTypeUI() {
     const type = getDraftType();
     if (type === "oneEach") {
@@ -216,22 +222,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkedComplexities = Array.from(
       form.querySelectorAll('input[name="complexity"]:checked')
     ).map((checkbox) => parseInt(checkbox.value, 10));
+    // Get selected expansions for filtering
+    const checkedExpansions = Array.from(
+      form.querySelectorAll('input[name="expansion"]:checked')
+    ).map((checkbox) => checkbox.value);
 
     if (draftType === "oneEach") {
       const numPlayers = parseInt(numPlayersSelect.value, 10);
       const pools = {
-        1: heroList.filter((hero) => hero.complexity === 1),
-        2: heroList.filter((hero) => hero.complexity === 2),
-        3: heroList.filter((hero) => hero.complexity === 3),
-        4: heroList.filter((hero) => hero.complexity === 4)
+        1: heroList.filter((hero) => hero.complexity === 1 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
+        2: heroList.filter((hero) => hero.complexity === 2 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
+        3: heroList.filter((hero) => hero.complexity === 3 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
+        4: heroList.filter((hero) => hero.complexity === 4 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()))
       };
 
       for (let complexity = 1; complexity <= 4; complexity += 1) {
         if (pools[complexity].length < numPlayers) {
-          resultsDiv.innerHTML = renderError(
+          renderResults(
+            renderError(
             `Error: Only ${pools[complexity].length} hero${
               pools[complexity].length === 1 ? "" : "es"
             } available for complexity ${complexity}, but you requested ${numPlayers}.`
+            )
           );
           return;
         }
@@ -261,16 +273,18 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
 
-      resultsDiv.innerHTML = renderPlayerDrafts(playerDrafts);
+      renderResults(renderPlayerDrafts(playerDrafts));
       return;
     }
 
     if (draftType === "single") {
       const numPlayers = parseInt(singleNumPlayersSelect.value, 10);
-      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity));
+      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()));
       if (eligibleHeroes.length < numPlayers * 3) {
-        resultsDiv.innerHTML = renderError(
-          `Error: Only ${eligibleHeroes.length} heroes available for the selected complexities, but you requested ${numPlayers * 3}.`
+        renderResults(
+          renderError(
+            `Error: Only ${eligibleHeroes.length} heroes available for the selected complexities, but you requested ${numPlayers * 3}.`
+          )
         );
         return;
       }
@@ -280,16 +294,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const playerHeroes = pool.splice(0, 3).sort((a, b) => a.complexity - b.complexity);
         playerDrafts.push(playerHeroes);
       }
-      resultsDiv.innerHTML = renderPlayerDrafts(playerDrafts);
+      renderResults(renderPlayerDrafts(playerDrafts));
       return;
     }
 
     if (draftType === "allRandom") {
       const numPlayers = parseInt(numPlayersSelect.value, 10);
-      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity));
+      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()));
       if (eligibleHeroes.length < numPlayers) {
-        resultsDiv.innerHTML = renderError(
-          `Error: Only ${eligibleHeroes.length} heroes available for the selected complexities, but you requested ${numPlayers}.`
+        renderResults(
+          renderError(
+            `Error: Only ${eligibleHeroes.length} heroes available for the selected complexities, but you requested ${numPlayers}.`
+          )
         );
         return;
       }
@@ -299,20 +315,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const hero = pool.shift();
         playerDrafts.push([hero]);
       }
-      resultsDiv.innerHTML = renderPlayerDrafts(playerDrafts);
+      renderResults(renderPlayerDrafts(playerDrafts));
       return;
     }
 
     const numHeroes = parseInt(numHeroesSelect.value, 10);
     const eligibleHeroes = heroList.filter((hero) =>
-      checkedComplexities.includes(hero.complexity)
+      checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())
     );
 
     if (eligibleHeroes.length < numHeroes) {
-      resultsDiv.innerHTML = renderError(
-        `Error: Only ${eligibleHeroes.length} hero${
-          eligibleHeroes.length === 1 ? "" : "es"
-        } available for your selection, but you requested ${numHeroes}.`
+      renderResults(
+        renderError(
+          `Error: Only ${eligibleHeroes.length} hero${
+            eligibleHeroes.length === 1 ? "" : "es"
+          } available for your selection, but you requested ${numHeroes}.`
+        )
       );
       return;
     }
@@ -321,6 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .slice(0, numHeroes)
       .sort((a, b) => a.complexity - b.complexity);
 
-    resultsDiv.innerHTML = renderHeroList(draftedHeroes);
+    renderResults(renderHeroList(draftedHeroes));
   });
 });

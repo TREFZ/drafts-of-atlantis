@@ -50,7 +50,7 @@
         <section class="rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col gap-4">
           <h2 class="mb-2 text-xl font-semibold text-slate-900 dark:text-slate-100">Draft options</h2>
           <div id="numHeroesGroup" class="flex flex-col gap-2">
-            <label for="numHeroes" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Number of heroes</label>
+            <label for="numHeroes" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Number of heroes (recommended: players + 2)</label>
             <select id="numHeroes" name="numHeroes" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-amber-400 dark:focus:ring-amber-400/20">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -66,28 +66,6 @@
               <option value="12">12</option>
             </select>
           </div>
-
-          <fieldset id="complexityGroup" class="flex flex-col gap-3 border-0 p-0">
-            <legend class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">
-              Complexity
-            </legend>
-            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
-              <input type="checkbox" name="complexity" value="1" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
-              <span aria-label="1 star" class="text-amber-500 dark:text-amber-400">⭐</span>
-            </label>
-            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
-              <input type="checkbox" name="complexity" value="2" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
-              <span aria-label="2 stars" class="text-amber-500 dark:text-amber-400">⭐⭐</span>
-            </label>
-            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
-              <input type="checkbox" name="complexity" value="3" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
-              <span aria-label="3 stars" class="text-amber-500 dark:text-amber-400">⭐⭐⭐</span>
-            </label>
-            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
-              <input type="checkbox" name="complexity" value="4" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
-              <span aria-label="4 stars" class="text-amber-500 dark:text-amber-400">⭐⭐⭐⭐</span>
-            </label>
-          </fieldset>
 
           <div id="numPlayersGroup" class="hidden flex-col gap-2">
             <label for="numPlayers" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Number of players</label>
@@ -118,6 +96,59 @@
               <option value="10">10</option>
             </select>
           </div>
+
+          <fieldset id="complexityGroup" class="flex flex-row justify-between md:justify-start gap-3 border-0 p-0">
+            <legend class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">
+              Complexity
+            </legend>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="1" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="1 star" class="text-xs text-amber-500 dark:text-amber-400">⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="2" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="2 stars" class="text-xs text-amber-500 dark:text-amber-400">⭐⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="3" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="3 stars" class="text-xs text-amber-500 dark:text-amber-400">⭐⭐⭐</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="complexity" value="4" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span aria-label="4 stars" class="text-xs text-amber-500 dark:text-amber-400">⭐⭐⭐⭐</span>
+            </label>
+          </fieldset>
+
+          <!-- Expansions checkbox group -->
+          <fieldset id="expansionGroup" class="grid grid-cols-3 gap-3 border-0 p-0">
+            <legend class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-300">
+              Expansions
+            </legend>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="base" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Base</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="arcane" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Arcane</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="defiant" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Defiant</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="devoted" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Devoted</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="renown" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Renown</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-base text-slate-700 dark:text-slate-200">
+              <input type="checkbox" name="expansion" value="wayward" checked class="h-5 w-5 accent-sky-700 dark:accent-amber-400">
+              <span>Wayward</span>
+            </label>
+          </fieldset>
         </section>
 
         <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-sky-700 px-4 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white dark:bg-amber-400 dark:text-slate-900 dark:hover:bg-amber-300 dark:focus:ring-amber-300 dark:focus:ring-offset-slate-900">
