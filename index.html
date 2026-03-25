@@ -20,37 +20,45 @@
 
       <form id="draftForm" class="mx-auto flex w-full max-w-xl flex-col gap-6">
         <!-- Draft type container -->
-        <fieldset id="draftTypeGroup" class="rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col gap-3 border-0 p-0">
+        <fieldset id="draftTypeGroup" class="flex flex-col gap-3 border-0 p-0 rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800">
           <h2 class="mb-2 text-xl font-semibold text-slate-900 dark:text-slate-100">
             Draft type
           </h2>
-          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+          <label class="flex items-baseline gap-3 text-base text-slate-700 dark:text-slate-200 cursor-pointer">
             <input type="radio" name="draftType" value="random" checked class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
-            <span>Random draft</span>
+            <div>
+              <span class="block">Random draft</span>
+              <span class="text-sm text-slate-500 dark:text-slate-400"><i>Teams draft from a random selection of heroes. Recommend setting the hero count to player count +2.</i></span>
+            </div>
           </label>
-          <div class="ml-7 mb-2 text-sm text-slate-500 dark:text-slate-400">Teams draft from a random selection of heroes. Recommend setting the hero count to player count + 2.</div>
-          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+          <label class="flex items-baseline gap-3 text-base text-slate-700 dark:text-slate-200 cursor-pointer">
             <input type="radio" name="draftType" value="single" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
-            <span>Single draft</span>
+            <div>
+              <span class="block">Single draft</span>
+              <span class="text-sm text-slate-500 dark:text-slate-400"><i>Assign each player three heroes. Each player then chooses one.</i></span>
+            </div>
           </label>
-          <div class="ml-7 mb-2 text-sm text-slate-500 dark:text-slate-400">Assign each player three heroes. Each player then chooses one.</div>
-          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+          <label class="flex items-baseline gap-3 text-base text-slate-700 dark:text-slate-200 cursor-pointer">
             <input type="radio" name="draftType" value="oneEach" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
-            <span>One from each complexity</span>
+            <div>
+              <span class="block">One from each complexity</span>
+              <span class="text-sm text-slate-500 dark:text-slate-400"><i>Assign each player one hero from each complexity rating. Each player then chooses one.</i></span>
+            </div>
           </label>
-          <div class="ml-7 text-sm text-slate-500 dark:text-slate-400">Assign each player one hero from each complexity rating. Each player then chooses one.</div>
-          <label class="flex cursor-pointer items-center gap-3 text-base text-slate-700 dark:text-slate-200">
+          <label class="flex items-baseline gap-3 text-base text-slate-700 dark:text-slate-200 cursor-pointer">
             <input type="radio" name="draftType" value="allRandom" class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
-            <span>All random</span>
+            <div>
+              <span class="block">All random</span>
+              <span class="text-sm text-slate-500 dark:text-slate-400"><i>Assign each player a random hero. You get what you get.</i></span>
+            </div>
           </label>
-          <div class="ml-7 text-sm text-slate-500 dark:text-slate-400">Assign each player a random hero. You get what you get.</div>
         </fieldset>
 
         <!-- Draft options container -->
         <section class="rounded-xl bg-slate-900/5 p-4 dark:bg-slate-800/40 ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col gap-4">
           <h2 class="mb-2 text-xl font-semibold text-slate-900 dark:text-slate-100">Draft options</h2>
           <div id="numHeroesGroup" class="flex flex-col gap-2">
-            <label for="numHeroes" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Number of heroes (recommended: players + 2)</label>
+            <label for="numHeroes" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Number of heroes (recommended: player count +2)</label>
             <select id="numHeroes" name="numHeroes" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-amber-400 dark:focus:ring-amber-400/20">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -78,6 +86,8 @@
               <option value="6">6</option>
               <option value="7">7</option>
               <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
             </select>
           </div>
 

@@ -34,6 +34,62 @@ const heroes = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  // --- Persistence helpers ---
+  const FORM_STORAGE_KEY = 'draftsOfAtlantisFormSettings';
+
+  function getFormSettings() {
+    const settings = {};
+    // Draft type
+    const draftType = draftTypeRadios.find((radio) => radio.checked);
+    settings.draftType = draftType ? draftType.value : '';
+    // Complexities
+    settings.complexity = Array.from(form.querySelectorAll('input[name="complexity"]')).map(cb => cb.checked);
+    // Expansions
+    settings.expansion = Array.from(form.querySelectorAll('input[name="expansion"]')).map(cb => cb.checked);
+    // Selects
+    settings.numHeroes = numHeroesSelect.value;
+    settings.numPlayers = numPlayersSelect.value;
+    settings.singleNumPlayers = singleNumPlayersSelect.value;
+    return settings;
+  }
+
+  function setFormSettings(settings) {
+    // Draft type
+    if (settings.draftType) {
+      const radio = form.querySelector(`input[name="draftType"][value="${settings.draftType}"]`);
+      if (radio) radio.checked = true;
+    }
+    // Complexities
+    if (Array.isArray(settings.complexity)) {
+      const cbs = form.querySelectorAll('input[name="complexity"]');
+      cbs.forEach((cb, i) => { cb.checked = !!settings.complexity[i]; });
+    }
+    // Expansions
+    if (Array.isArray(settings.expansion)) {
+      const cbs = form.querySelectorAll('input[name="expansion"]');
+      cbs.forEach((cb, i) => { cb.checked = !!settings.expansion[i]; });
+    }
+    // Selects
+    if (settings.numHeroes) numHeroesSelect.value = settings.numHeroes;
+    if (settings.numPlayers) numPlayersSelect.value = settings.numPlayers;
+    if (settings.singleNumPlayers) singleNumPlayersSelect.value = settings.singleNumPlayers;
+  }
+
+  function saveFormSettings() {
+    const settings = getFormSettings();
+    localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(settings));
+  }
+
+  function restoreFormSettings() {
+    const raw = localStorage.getItem(FORM_STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const settings = JSON.parse(raw);
+      setFormSettings(settings);
+    } catch (e) {
+      console.warn("Could not restore form settings:", e);
+    }
+  }
   const form =
     document.getElementById("draftForm") ||
     document.getElementById("draft-form");
@@ -200,17 +256,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
+  // --- Attach change listeners for persistence ---
   draftTypeRadios.forEach((radio) => {
     radio.addEventListener("change", () => {
       updateDraftTypeUI();
       clearResults();
+      saveFormSettings();
     });
   });
 
   form.querySelectorAll("input, select").forEach((element) => {
-    element.addEventListener("change", clearResults);
+    element.addEventListener("change", () => {
+      clearResults();
+      saveFormSettings();
+    });
   });
 
+  // Restore settings on load
+  restoreFormSettings();
   updateDraftTypeUI();
 
   form.addEventListener("submit", (event) => {
