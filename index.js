@@ -36,6 +36,7 @@ const heroes = {
 document.addEventListener("DOMContentLoaded", () => {
   // --- Persistence helpers ---
   const FORM_STORAGE_KEY = 'draftsOfAtlantisFormSettings';
+  const heroNames = Object.keys(heroes).sort((a, b) => a.localeCompare(b));
 
   function getFormSettings() {
     const settings = {};
@@ -46,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     settings.complexity = Array.from(form.querySelectorAll('input[name="complexity"]')).map(cb => cb.checked);
     // Expansions
     settings.expansion = Array.from(form.querySelectorAll('input[name="expansion"]')).map(cb => cb.checked);
+    settings.heroSelection = Array.from(form.querySelectorAll('input[name="heroSelection"]')).map(cb => cb.checked);
+    settings.heroSelectionExpanded = heroSelectionDetails.open;
     // Selects
     settings.numHeroes = numHeroesSelect.value;
     settings.numPlayers = numPlayersSelect.value;
@@ -69,6 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const cbs = form.querySelectorAll('input[name="expansion"]');
       cbs.forEach((cb, i) => { cb.checked = !!settings.expansion[i]; });
     }
+    if (Array.isArray(settings.heroSelection)) {
+      const cbs = form.querySelectorAll('input[name="heroSelection"]');
+      cbs.forEach((cb, i) => { cb.checked = settings.heroSelection[i] !== false; });
+    }
+    heroSelectionDetails.open = settings.heroSelectionExpanded === true;
     // Selects
     if (settings.numHeroes) numHeroesSelect.value = settings.numHeroes;
     if (settings.numPlayers) numPlayersSelect.value = settings.numPlayers;
@@ -110,6 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const numPlayersGroup = document.getElementById("numPlayersGroup");
   const singleNumPlayersGroup = document.getElementById("singleNumPlayersGroup");
   const expansionGroup = document.getElementById("expansionGroup");
+  const heroSelectionDetails = document.getElementById("heroSelectionDetails");
+  const heroSelectionList = document.getElementById("heroSelectionList");
+  const addAllHeroesButton = document.getElementById("addAllHeroesButton");
 
   const numHeroesSelect = document.getElementById("numHeroes");
   const numPlayersSelect = document.getElementById("numPlayers");
@@ -123,6 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
     !numHeroesGroup ||
     !numPlayersGroup ||
     !singleNumPlayersGroup ||
+    !heroSelectionDetails ||
+    !heroSelectionList ||
+    !addAllHeroesButton ||
     !numHeroesSelect ||
     !numPlayersSelect ||
     !singleNumPlayersSelect
@@ -134,8 +148,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function getHeroList() {
     return Object.entries(heroes).map(([name, data]) => ({
       name,
-      complexity: data.complexity
+      complexity: data.complexity,
+      expansion: data.expansion.toLowerCase()
     }));
+  }
+
+  function populateHeroSelectionList() {
+    heroSelectionList.innerHTML = heroNames
+      .map(
+        (name) => `
+          <label class="flex cursor-pointer items-center gap-3 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700 dark:bg-slate-950 dark:text-slate-200">
+            <input type="checkbox" name="heroSelection" value="${name}" checked class="h-4 w-4 accent-sky-700 dark:accent-amber-400">
+            <span class="grow font-medium">${name}</span>
+            ${starMarkup(heroes[name].complexity)}
+          </label>
+        `
+      )
+      .join("");
   }
 
   function shuffle(array) {
@@ -226,6 +255,14 @@ document.addEventListener("DOMContentLoaded", () => {
     resultsDiv.innerHTML = "";
   }
 
+  function getIncludedHeroNames() {
+    return new Set(
+      Array.from(form.querySelectorAll('input[name="heroSelection"]:checked')).map(
+        (checkbox) => checkbox.value
+      )
+    );
+  }
+
   function renderResults(markup) {
     resultsDiv.innerHTML = markup;
     resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -273,7 +310,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  heroSelectionList.addEventListener("change", (event) => {
+    if (event.target instanceof HTMLInputElement && event.target.name === "heroSelection") {
+      clearResults();
+      saveFormSettings();
+    }
+  });
+
+  heroSelectionDetails.addEventListener("toggle", saveFormSettings);
+
+  addAllHeroesButton.addEventListener("click", () => {
+    form.querySelectorAll('input[name="heroSelection"]').forEach((checkbox) => {
+      checkbox.checked = true;
+    });
+    clearResults();
+    saveFormSettings();
+  });
+
   // Restore settings on load
+  populateHeroSelectionList();
   restoreFormSettings();
   updateDraftTypeUI();
 
@@ -290,14 +345,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkedExpansions = Array.from(
       form.querySelectorAll('input[name="expansion"]:checked')
     ).map((checkbox) => checkbox.value);
+    const includedHeroNames = getIncludedHeroNames();
+    const expansionFilteredHeroes = heroList.filter(
+      (hero) =>
+        includedHeroNames.has(hero.name) &&
+        checkedExpansions.includes(hero.expansion)
+    );
 
     if (draftType === "oneEach") {
       const numPlayers = parseInt(numPlayersSelect.value, 10);
       const pools = {
-        1: heroList.filter((hero) => hero.complexity === 1 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
-        2: heroList.filter((hero) => hero.complexity === 2 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
-        3: heroList.filter((hero) => hero.complexity === 3 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())),
-        4: heroList.filter((hero) => hero.complexity === 4 && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()))
+        1: expansionFilteredHeroes.filter((hero) => hero.complexity === 1),
+        2: expansionFilteredHeroes.filter((hero) => hero.complexity === 2),
+        3: expansionFilteredHeroes.filter((hero) => hero.complexity === 3),
+        4: expansionFilteredHeroes.filter((hero) => hero.complexity === 4)
       };
 
       for (let complexity = 1; complexity <= 4; complexity += 1) {
@@ -343,7 +404,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (draftType === "single") {
       const numPlayers = parseInt(singleNumPlayersSelect.value, 10);
-      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()));
+      const eligibleHeroes = expansionFilteredHeroes.filter((hero) =>
+        checkedComplexities.includes(hero.complexity)
+      );
       if (eligibleHeroes.length < numPlayers * 3) {
         renderResults(
           renderError(
@@ -364,7 +427,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (draftType === "allRandom") {
       const numPlayers = parseInt(numPlayersSelect.value, 10);
-      const eligibleHeroes = heroList.filter((hero) => checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase()));
+      const eligibleHeroes = expansionFilteredHeroes.filter((hero) =>
+        checkedComplexities.includes(hero.complexity)
+      );
       if (eligibleHeroes.length < numPlayers) {
         renderResults(
           renderError(
@@ -384,8 +449,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const numHeroes = parseInt(numHeroesSelect.value, 10);
-    const eligibleHeroes = heroList.filter((hero) =>
-      checkedComplexities.includes(hero.complexity) && checkedExpansions.includes(heroes[hero.name].expansion.toLowerCase())
+    const eligibleHeroes = expansionFilteredHeroes.filter((hero) =>
+      checkedComplexities.includes(hero.complexity)
     );
 
     if (eligibleHeroes.length < numHeroes) {
